@@ -1,0 +1,38 @@
+interactions:
+  - request:
+      body:
+        '{"empresa": "TAMIZI", "claveRastreo": "W1397800050926686208,10454094", "tipoOrden":
+        "E", "fechaOperacion": "20220418", "firma": "PIjV3hH8nebBlfvB5IZyjDfCuIwCeHKj4Gc0+uhUgwKbCYZjfRW6+Qa22n8CNhoZLZZe15jdSnjcT7g4UHIfmIPdv3iJlix/OVM/FzOIXL0lBrn40NTaJeBrqNZMKS5dMBPqc8NDib1IsoV7NZlUcfMa4JsDdQe3HQ8dRm7yZMc="}'
+      headers:
+        Accept:
+          - "*/*"
+        Accept-Encoding:
+          - gzip, deflate
+        Connection:
+          - keep-alive
+        Content-Length:
+          - "292"
+        Content-Type:
+          - application/json
+        User-Agent:
+          - stpmex-python/3.10.0.dev12
+      method: POST
+      uri: https://efws-dev.stpmex.com/efws/API/consultaOrdenes
+    response:
+      body:
+        string: '{"estado":0,"mensaje":"Datosconsultadoscorrectamente","datos":[{"idEF":1452366,"claveRastreo":"W1397800050926686208","conceptoPago":"PRUEBA","cuentaBeneficiario":"646180123400000001","cuentaOrdenante":"012180321400000003","empresa":"EMPRESA","estado":"CCO","fechaOperacion":20220104,"institucionContraparte":40012,"institucionOperante":90646,"medioEntrega":1,"monto":1,"nombreBeneficiario":"PruebaBeneficiario","nombreOrdenante":"PruebaOrdenante","nombreCep":null,"rfcCep":"XXXX000000XXX","sello":null,"rfcCurpBeneficiario":null,"referenciaNumerica":401220,"rfcCurpOrdenante":"XXXX000000XXX","tipoCuentaBeneficiario":40,"tipoCuentaOrdenante":40,"tipoPago":1,"tsCaptura":1641321000363,"tsLiquidacion":1641321000363,"causaDevolucion":null,"urlCEP":"http://170.70.236.24:18080/cep/goi=90646&s=20210110.90646"},{"id":1493367,"idEF":1493367,"claveRastreo":"10454094","conceptoPago":"PRUEBA","cuentaBeneficiario":"646180123400000001","cuentaOrdenante":"012180321400000003","empresa":"EMPRESA","estado":"CCO","fechaOperacion":20220104,"institucionContraparte":40012,"institucionOperante":90646,"medioEntrega":1,"monto":14.21,"nombreBeneficiario":"PruebaBeneficiario","nombreOrdenante":"PruebaOrdenante","nombreCep":null,"rfcCep":"XXXX000000XXX","sello":null,"rfcCurpBeneficiario":null,"referenciaNumerica":401220,"rfcCurpOrdenante":"XXXX000000XXX","tipoCuentaBeneficiario":40,"tipoCuentaOrdenante":40,"tipoPago":1,"tsCaptura":1641321000383,"tsLiquidacion":1641321000383,"causaDevolucion":null,"urlCEP":"http://170.70.236.24:18080/cep/goi=90646&s=20210110.90646"}]}'
+      headers:
+        Connection:
+          - keep-alive
+        Content-Type:
+          - application/json
+        Date:
+          - Mon, 18 Apr 2022 15:19:08 GMT
+        Server:
+          - nginx/1.14.1
+        Transfer-Encoding:
+          - chunked
+      status:
+        code: 200
+        message: OK
+version: 1

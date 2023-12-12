@@ -216,7 +216,6 @@ class OrdenV2(Resource):
         fechaOperacion: Optional[dt.date] = None,
     ) -> 'OrdenConsultada':  # noqa: F821
         """
-
         Based on:
         https://stpmex.zendesk.com/hc/es/articles/4407474570139-Consulta-Orden
         """
@@ -227,6 +226,50 @@ class OrdenV2(Resource):
         else:  # recibida
             consulta_method = cls._consulta_clave_rastreo_recibida
         return consulta_method(claveRastreo, fechaOperacion)
+
+    @classmethod
+    def consulta_ordenes(
+        cls,
+        clavesRastreo: List[str],
+        institucionOperante: Union[int, str],
+        fechaOperacion: Optional[dt.date] = None,
+    ) -> List['OrdenConsultada']:  # noqa: F821
+        """
+        Based on:
+        https://stpmex.zendesk.com/hc/es/articles/4407493367835-Consulta-Ordenes
+        """
+        institucionOperante = int(institucionOperante)
+        if institucionOperante == STP_BANK_CODE:  # enviada
+            tipo_orden = 'E'
+        else:  # recibida
+            tipo_orden = 'R'
+
+        base_url = EFWS_PROD_HOST
+        if cls._client.demo:
+            base_url = EFWS_DEV_HOST
+
+        all_ordenes = []
+        for i in range(0, len(clavesRastreo), 100):
+            claves_chunk = clavesRastreo[i : i + 100]
+            consulta = dict(
+                empresa=cls.empresa,
+                claveRastreo=(',').join(claves_chunk),
+                tipoOrden=tipo_orden,
+            )
+
+            if fechaOperacion:
+                consulta['fechaOperacion'] = strftime(fechaOperacion)
+
+            consulta['firma'] = cls._firma_consulta_efws(consulta)
+
+            resp = cls._client.post(
+                '/efws/API/consultaOrdenes', consulta, base_url=base_url
+            )
+            all_ordenes.extend(
+                [cls._sanitize_consulta(orden) for orden in resp['datos']]
+            )
+
+        return all_ordenes
 
     @classmethod
     def _consulta_clave_rastreo_enviada(
