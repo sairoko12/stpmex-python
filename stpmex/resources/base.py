@@ -1,14 +1,17 @@
 import datetime as dt
 from dataclasses import asdict, make_dataclass
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, TYPE_CHECKING
 
 from ..auth import compute_signature, join_fields
 from ..types import Estado
 from ..utils import strftime, strptime
 
+if TYPE_CHECKING:
+    from stpmex.client import Client
+
 
 class Resource:
-    _client: ClassVar['stpmex.Client']  # noqa: F821
+    _client: ClassVar['Client']  # noqa: F821
     _endpoint: ClassVar[str]
     _firma_fieldnames: ClassVar[List[str]]
     empresa: ClassVar[str]

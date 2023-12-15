@@ -40,8 +40,9 @@ def get_next_business_day(fecha: Union[dt.datetime, dt.date]) -> dt.date:
     try:
         # based on
         # https://stpmex.zendesk.com/hc/es/articles/360045884491-Fecha-de-Operaci%C3%B3n
-        assert fecha.hour >= 18
-        fecha = fecha.date() + dt.timedelta(days=1)
+        if isinstance(fecha, dt.datetime):
+            assert fecha.hour >= 18
+            fecha = fecha.date() + dt.timedelta(days=1)
     except (AssertionError, AttributeError):
         ...
 
