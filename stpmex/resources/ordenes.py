@@ -260,7 +260,7 @@ class OrdenV2(Resource):
             if fechaOperacion:
                 consulta['fechaOperacion'] = strftime(fechaOperacion)
 
-            consulta['firma'] = cls._firma_consulta_efws(consulta)
+            consulta['firma'] = cls._firma_consulta_ordenes(consulta)
 
             resp = cls._client.post(
                 '/efws/API/consultaOrdenes', consulta, base_url=base_url
