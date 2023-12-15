@@ -178,3 +178,32 @@ def test_institucion_bloqueada_no_permite_registrar_orden(
         client.ordenes.registra(**orden_dict)
 
     assert any(error == expected_error_dict for error in exc.value.errors())
+
+
+@pytest.mark.vcr
+def test_consulta_ordenes(client: Client):
+    ordenes = client.ordenes_v2.consulta_ordenes(
+        ['W1397800050926686208', '10454094'],
+        90646,
+    )
+
+    assert len(ordenes) == 2
+    assert ordenes[0].claveRastreo == 'W1397800050926686208'
+    assert ordenes[1].claveRastreo == '10454094'
+
+
+def test_consulta_ordenes_chunks(client: Client, mocker):
+    clabes = [f'CLABE{i}' for i in range(301)]
+    client_mock = mocker.patch.object(
+        client,
+        'post',
+        return_value={'datos': [{'claveRastreo': 'CLABEXXX'}]},
+    )
+    ordenes = client.ordenes_v2.consulta_ordenes(
+        clabes,
+        90646,
+    )
+
+    assert client_mock.call_count == 4
+    assert len(ordenes) == 4
+    assert ordenes[0].claveRastreo == 'CLABEXXX'
