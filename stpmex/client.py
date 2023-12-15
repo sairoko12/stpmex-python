@@ -5,6 +5,7 @@ from typing import Any, ClassVar, Dict, List, NoReturn, Optional, Union
 from cryptography.exceptions import UnsupportedAlgorithm
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey
 from requests import Response, Session
 
 from .exc import (
@@ -65,9 +66,9 @@ class Client:
         priv_key: str,
         priv_key_passphrase: str,
         demo: bool = False,
-        base_url: str = None,
-        soap_url: str = None,
-        timeout: tuple = None,
+        base_url: Optional[str] = None,
+        soap_url: Optional[str] = None,
+        timeout: Optional[tuple] = None,
         verify: Union[bool, str] = True,
     ):
         self.timeout = timeout
@@ -83,7 +84,7 @@ class Client:
         self.soap_url = soap_url or f'{host_url}/spei/webservices/SpeiConsultaServices'
 
         try:
-            self.pkey = serialization.load_pem_private_key(
+            self.pkey: RSAPrivateKey = serialization.load_pem_private_key(  # type: ignore
                 priv_key.encode('utf-8'),
                 priv_key_passphrase.encode('ascii'),
                 default_backend(),
@@ -195,7 +196,7 @@ def _raise_description_error_exc(resp: Dict) -> NoReturn:
         raise StpmexException(**resp['resultado'])
 
 
-def _raise_description_exc(resp: Dict) -> NoReturn:
+def _raise_description_exc(resp: Dict) -> None:
     id = resp['id']
     desc = resp['descripcion']
 

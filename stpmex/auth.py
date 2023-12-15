@@ -1,10 +1,14 @@
 from base64 import b64encode
 from enum import Enum
-from typing import List
+from typing import List, TYPE_CHECKING
 
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey
 from cryptography.hazmat.primitives.hashes import SHA256
+
+if TYPE_CHECKING:
+    from stpmex.resources.base import Resource
+
 
 CUENTA_FIELDNAMES = """
     empresa
@@ -52,7 +56,7 @@ ORDEN_FIELDNAMES = """
 SIGN_DIGEST = 'RSA-SHA256'
 
 
-def join_fields(obj: 'Resource', fieldnames: List[str]) -> bytes:  # noqa: F821
+def join_fields(obj: 'Resource', fieldnames: List[str]) -> str:
     joined_fields = []
     for field in fieldnames:
         value = getattr(obj, field, None)

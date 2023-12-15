@@ -22,7 +22,7 @@ class Saldo(Resource):
         data = dict(empresa=cls.empresa, firma=cls._firma_consulta({}))
         resp = cls._client.post(cls._endpoint, data)
         saldos = []
-        for saldo in resp['saldos']:
+        for saldo in resp['saldos']:  # type: ignore
             del saldo['empresa']
             saldos.append(cls(**saldo))
         return saldos
@@ -54,4 +54,8 @@ class Saldo(Resource):
             resp.raise_for_status()
         root = ElementTree.fromstring(resp.text)
         saldo = root.findtext('.//saldo')
+
+        if not saldo:
+            return 0
+
         return float(saldo)
