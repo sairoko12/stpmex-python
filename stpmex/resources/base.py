@@ -49,6 +49,17 @@ class Resource:
         return compute_signature(cls._client.pkey, joined)
 
     @classmethod
+    def _firma_consulta_ordenes(cls, consulta):
+        joined = (
+            f"||"
+            f"{cls.empresa}|"
+            f"{consulta.get('tipoOrden', '')}|"
+            f"{consulta.get('claveRastreo', '')}|"
+            f"{consulta.get('fechaOperacion', '')}||"
+        )
+        return compute_signature(cls._client.pkey, joined)
+
+    @classmethod
     def _firma_consulta_instituciones_efws(cls):
         joined = f'||{cls.empresa}||'
         return compute_signature(cls._client.pkey, joined)
