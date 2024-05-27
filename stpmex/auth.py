@@ -52,10 +52,16 @@ ORDEN_FIELDNAMES = """
     medioEntrega
     prioridad
     iva
+    """.split()
+
+ORDEN_INDIRECTA_FIELDNAMES = (
+    ORDEN_FIELDNAMES
+    + """
     nombreParticipanteIndirecto
     cuentaParticipanteIndirecto
     rfcParticipanteIndirecto
     """.split()
+)
 SIGN_DIGEST = 'RSA-SHA256'
 
 
