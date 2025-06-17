@@ -82,6 +82,7 @@ class Orden(Resource):
 
     @classmethod
     def registra(cls, **kwargs) -> 'Orden':
+        print('Client order payload: %s', kwargs)
         orden = cls(**kwargs)
         endpoint = orden._endpoint + '/registra'
         resp = orden._client.put(endpoint, orden.to_dict())
