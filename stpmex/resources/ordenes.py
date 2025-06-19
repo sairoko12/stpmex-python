@@ -68,6 +68,10 @@ class Orden(Resource):
     medioEntrega: int = 3
     tipoPago: int = 30
     topologia: str = 'T'
+
+    latitud: str = ''
+    longitud: str = ''
+
     iva: Optional[float] = None
 
     id: Optional[int] = None
